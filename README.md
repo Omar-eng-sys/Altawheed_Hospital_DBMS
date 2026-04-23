@@ -6,7 +6,7 @@ Welcome to Phase 2 (SQL Implementation). Please follow this workflow strictly.
 
 **1. Setup (First time only):**
 ```bash
-git clone [https://github.com/Omar-eng-sys/Altawheed_Hospital_DBMS.git](https://github.com/Omar-eng-sys/Altawheed_Hospital_DBMS.git)
+git clone https://github.com/Omar-eng-sys/Altawheed_Hospital_DBMS.git
 ```
 
 **2. Update (Every time you start):**
@@ -33,4 +33,3 @@ git push
 * **Module 3 (Surgery):** Ahmad Ayman
 * **Module 4 (Pharmacy):** Muhammad Ali
 * **Module 5 (Labs):** Nader Saleh
-```
