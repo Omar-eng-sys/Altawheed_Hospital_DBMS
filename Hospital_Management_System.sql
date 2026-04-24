@@ -213,9 +213,63 @@ CREATE TABLE Performs (
 -- ============================================================
 
 -- TODO: Add Lab_Test, Radiology_Scan, Invoice tables
+CREATE TABLE Test_Lab (
+    Test_Name     VARCHAR(100) PRIMARY KEY,
+    Sample_Type   VARCHAR(50),
+    Turnaround_Hr NUMERIC(4,1),
+    Cost          NUMERIC(8,2),
+    Dept_Name     VARCHAR(100) REFERENCES Department(Dept_Name)
+);
+
+CREATE TABLE Radiology_Scan (
+    Scan_Name     VARCHAR(100) PRIMARY KEY,
+    Cost          NUMERIC(8,2),
+    Dept_Name     VARCHAR(100) REFERENCES Department(Dept_Name)
+);
+
+CREATE TABLE Invoice (
+    Invoice_No   VARCHAR(50) PRIMARY KEY,
+    Issue_Date   DATE,
+    Status       VARCHAR(50),
+    Pay_Method   VARCHAR(50),
+    Total_Amt    NUMERIC(10,2),
+    Amt_Paid     NUMERIC(10,2),
+    Rec_NID      VARCHAR(14) REFERENCES Receptionist(Rec_NID),
+    policy_No    VARCHAR(50) REFERENCES Insurance(Policy_No),
+    Pat_NID      VARCHAR(14) REFERENCES Patient(Pat_NID)
+);
 -- TODO: Add Result and Invoice mapping tables
+ 
+    create table Test_Result(
+    Test_Name    Varchar(100) ,  
+    Pat_NID      Varchar(14),  
+    PRIMARY key  (Test_Name,Pat_NID),
+    FOREIGN key  (Test_Name) REFERENCES Test_Lab(Test_Name),
+    FOREIGN KEY  (Pat_NID) REFERENCES Patient(Pat_NID) 
+);
 
+    create table Scan_Result(
+    Scan_Name    Varchar(100) ,  
+    Pat_NID      Varchar(14),  
+    PRIMARY key  (Scan_Name,Pat_NID),
+    FOREIGN key  (Scan_Name) REFERENCES Radiology_Scan(Scan_Name),
+    FOREIGN KEY  (Pat_NID) REFERENCES Patient(Pat_NID)
+);
 
+    create table Radiology_Scan_Invoice(
+    Scan_Name   Varchar(100) ,  
+    Invoice_No  Varchar(50),  
+    PRIMARY key (Scan_Name,Invoice_No),
+    FOREIGN key (Scan_Name) REFERENCES Radiology_Scan(Scan_Name),
+    FOREIGN KEY (Invoice_No) REFERENCES Invoice(Invoice_No)
+);
+    create table Invoice_Lab_Test(
+    Test_Name    Varchar(100) ,  
+    Invoice_No   Varchar(50),  
+    PRIMARY key  (Test_Name,Invoice_No),
+    FOREIGN key  (Test_Name) REFERENCES Lab_Test(Test_Name),
+    FOREIGN KEY  (Invoice_No) REFERENCES Invoice(Invoice_No)
+);
 -- ============================================================
 -- [7] FINAL CONSTRAINTS (ALTER TABLE)
 -- Add Foreign Keys that reference tables across different modules
