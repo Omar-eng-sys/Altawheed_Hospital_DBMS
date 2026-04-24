@@ -15,7 +15,7 @@
 
 -- Create Department Table first (Parent for all staff)
 CREATE TABLE Department (
-    Dept_ID     VARCHAR2(20) PRIMARY KEY,
+    Dept_ID     VARCHAR2(3) PRIMARY KEY,
     Name        VARCHAR2(100) NOT NULL,
     Location    VARCHAR2(50),
     M_NID       VARCHAR2(14), -- Manager ID (FK to Doctors added later via ALTER)
