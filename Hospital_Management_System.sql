@@ -41,8 +41,93 @@ CREATE TABLE Insurance (
 );
 
 -- TODO: Add Patient table (References Insurance, Receptionist, Dept)
+CREATE TABLE PATIENT(
+    Pat_NID varchar2(14) primary key ,
+    Name varchar2(100) NOT NULL ,
+    Gender varchar2(1) NOT NULL ,
+    DOB DATE ,
+    Ins_Policy varchar2(50) REFERENCES Insurance(Policy_No),
+    Rec_ID varchar2(14) , -- Receptionist ID (FK to Receptionist added later via ALTER)
+    Dept_ID varchar2(3) REFERENCES Department(Dept_ID)
+  );
+
 -- TODO: Add Weak Entities (Dependent, Medical_History)
--- TODO: Add M:N Tables (Appointment, Refers)
+CREATE TABLE MEDICAL_HISTORY(
+    Record_No varchar2(20) primary key ,
+    Pat_NID varchar2(14) REFERENCES PATIENT(Pat_NID),
+    Smoking_st varchar2(20) ,
+    Blood_Type varchar2(5)
+  );
+
+CREATE TABLE DEPENDENT(
+    Pat_NID varchar2(14) references Patient(Pat_NID),
+    Dep_Name varchar2(100) ,
+    Relation varchar2(30) ,
+    Primary key (Pat_NID , Dep_Name)
+  );
+
+-- TODO: Add M:N Tables , multivalues (Appointment, Refers , Phones , chronic deseases, etc.)
+CREATE TABLE Patient_Phone(
+    Pat_NID varchar2(14) REFERENCES Patient(Pat_NID) ,
+    phone varchar2(15) ,
+    primary key (Pat_NID , phone)
+  );
+
+CREATE TABLE Dep_phone(
+    Pat_NID varchar2(14) references Patient(Pat_NID),
+    Dep_Name varchar2(100) ,
+    phone varchar2(15) ,
+    Primary key (Pat_NID , Dep_Name , phone)
+  );
+
+CREATE TABLE Chronic_Diseases(
+    Pat_NID varchar2(14) references patient(Pat_NID) ,
+    Record_No varchar2(20) references Medical_History(Record_No),
+    Disease varchar2(100) ,
+    Primary key (Pat_NID ,Record_No , Disease)
+  );
+
+CREATE TABLE Allergies(
+    Pat_NID varchar2(14) references patient(Pat_NID) ,
+    Record_No varchar2(20) references Medical_History(Record_No),
+    Allergy varchar2(100) ,
+    Primary key (Pat_NID ,Record_No , Allergy)
+  );
+
+CREATE TABLE Past_Surgeries(
+    Pat_NID varchar2(14) references patient(Pat_NID) ,
+    Record_No varchar2(20) references Medical_History(Record_No),
+    Surgery varchar2(100) ,
+    Primary key (Pat_NID ,Record_No , surgery)
+  );
+
+CREATE TABLE Current_Medication (
+    Pat_NID varchar2(14) references patient(Pat_NID) ,
+    Record_No varchar2(20) references Medical_History(Record_No),
+    Medication varchar2(100) ,
+    PRIMARY KEY (Pat_NID, Record_No, Medication)
+    );
+
+CREATE TABLE Appointment(
+    Pat_NID varchar2(14) references patient(Pat_NID) ,
+    Doctor_NID varchar2(14), -- FK to Doctors added later via ALTER
+    Appt_Date Date ,
+    Appt_time varchar2(10) ,
+    Status varchar2(20) ,
+    Visit_Type varchar2(30) ,
+    Priority varchar2(20) ,
+    Queue_No number(4,0) ,
+   Primary key (Pat_NID , Doctor_NID , Appt_Date )
+  );
+
+Create table Refers(
+    Pat_NID varchar2(14) references Patient(Pat_NID) ,
+    Doctor_NID varchar2(14) , -- FK to Doctors added later via ALTER
+    Dept_ID varchar2(3) REFERENCES Department(Dept_ID) ,
+    Reason varchar2(200) ,
+    Urgency varchar2(20) ,
+    Primary key ( Pat_NID , Doctor_NID , Dept_ID )
+  );
 
 
 -- ============================================================
