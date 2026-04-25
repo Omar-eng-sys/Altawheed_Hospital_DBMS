@@ -21,7 +21,7 @@ CREATE TABLE Department (
 );
 
 CREATE TABLE Doctors (
-    NID         VARCHAR2(3) PRIMARY KEY,
+    NID         VARCHAR2(14) PRIMARY KEY,
     Name        VARCHAR2(100) NOT NULL,
     Consultation_Fee NUMBER(8,2),
     License_Number VARCHAR2(20) NOT NULL,
