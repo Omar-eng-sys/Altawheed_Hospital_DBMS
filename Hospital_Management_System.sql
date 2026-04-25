@@ -17,14 +17,73 @@
 CREATE TABLE Department (
     Dept_ID     VARCHAR2(3) PRIMARY KEY,
     Name        VARCHAR2(100) NOT NULL,
-    Location    VARCHAR2(50),
-    M_NID       VARCHAR2(14), -- Manager ID (FK to Doctors added later via ALTER)
+    Location    VARCHAR2(50)
+);
+
+CREATE TABLE Doctors (
+    NID         VARCHAR2(3) PRIMARY KEY,
+    Name        VARCHAR2(100) NOT NULL,
+    Consultation_Fee NUMBER(8,2),
+    License_Number VARCHAR2(20) NOT NULL,
+    Year_of_Experience NUMBER(2),
+    Salary      NUMBER(10,2),
+    Schedule    Varchar2(50),
+    Specialty   Varchar2(50)
+    Dept_ID     Varchar2(3) REFERENCES Department
+);
+
+ALTER TABLE Department ADD(
+    M_NID       VARCHAR2(14) REFERENCES Doctors,
     M_Start_Date DATE
 );
 
--- TODO: Add Doctors, Nurse, Pharmacist, Receptionist tables here
--- TODO: Add Multivalued Phone tables (Dr_Phone, Nu_Phone, etc.)
+CREATE TABLE Nurse (
+    NID         VARCHAR2(14) PRIMARY KEY,
+    Name        VARCHAR2(100) NOT NULL,
+    Schedule    VARCHAR2(50),
+    Salary      NUMBER(10,2),
+    Dept_ID     Varchar2(3) REFERENCES Department,
+    D_NID       VARCHAR2(14) REFERENCES Doctors 
+);
 
+CREATE TABLE Pharmacist (
+    NID         VARCHAR2(14) PRIMARY KEY,
+    Name        VARCHAR2(100) NOT NULL,
+    Schedule    VARCHAR2(50),
+    Salary      NUMBER(10,2),
+    Dept_ID     VARCHAR2(3) REFERENCES Department
+);
+
+CREATE TABLE Receptionist (
+    NID         VARCHAR2(14) PRIMARY KEY,
+    Name        VARCHAR2(100) NOT NULL,
+    Schedule    VARCHAR2(50),
+    Salary      NUMBER(10,2)
+);
+
+CREATE TABLE Dr_Phone (
+    Phone       VARCHAR2(15),
+    D_NID       VARCHAR2(14) REFERENCES Doctors,
+    PRIMARY KEY(Phone,D_NID)
+);
+
+CREATE TABLE Nu_Phone (
+    Phone       VARCHAR2(15),
+    Nu_NID       VARCHAR2(14) REFERENCES Nurse,
+    PRIMARY KEY(Phone,D_NID)
+);
+
+CREATE TABLE Ph_Phone (
+    Phone       VARCHAR2(15),
+    Ph_NID       VARCHAR2(14) REFERENCES Pharmacist,
+    PRIMARY KEY(Phone,D_NID)
+);
+
+CREATE TABLE Rs_Phone (
+    Phone       VARCHAR2(15),
+    Rs_NID       VARCHAR2(14) REFERENCES Receptionist,
+    PRIMARY KEY(Phone,D_NID)
+);
 
 -- ============================================================
 -- [3] MODULE 2: PATIENT RECORDS (Omar Nasser)
