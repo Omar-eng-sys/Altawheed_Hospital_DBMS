@@ -196,6 +196,8 @@ CREATE TABLE Performs (
     PRIMARY KEY (Surg_Name, Doc_NID),
     FOREIGN KEY (Surg_Name) REFERENCES Surgery(Surg_Name)
 );
+
+
 -- ============================================================
 -- [5] MODULE 4: PHARMACY (Muhammad Ali)
 -- Entities: Medicine + Pharmacy Relations
