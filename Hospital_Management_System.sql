@@ -262,7 +262,7 @@ CREATE TABLE Invoice (
     Pay_Method   VARCHAR2(50),
     Total_Amt    number(10,2),
     Amt_Paid     number(10,2),
-    Rec_NID      VARCHAR2(14) REFERENCES Receptionist(Rec_NID),
+    Rec_NID      VARCHAR2(14) , -- fk from Receptionist added later via ALTER
     policy_No    VARCHAR2(50) REFERENCES Insurance(Policy_No),
     Pat_NID      VARCHAR2(14) REFERENCES Patient(Pat_NID)
 );
