@@ -4,10 +4,6 @@
 -- Team Leader: Omar Nasser
 -- ============================================================
 
--- [1] CLEANUP SECTION 
--- Note: Tables are dropped in reverse order of creation to avoid constraint violations.
--- DROP TABLE Table_Name CASCADE CONSTRAINTS;
-
 -- ============================================================
 -- [2] MODULE 1: HR & ADMINISTRATION (Muhammad Ragab)
 -- Entities: Department, Doctors, Nurse, Pharmacist, Receptionist + Phones
@@ -17,7 +13,9 @@
 CREATE TABLE Department (
     Dept_ID     VARCHAR2(3) PRIMARY KEY,
     Name        VARCHAR2(100) NOT NULL,
-    Location    VARCHAR2(50)
+    Location    VARCHAR2(50) ,
+    M_NID       VARCHAR2(14) , -- Manager NID (FK to Doctors added later via ALTER)
+    M_Start_Date DATE
 );
 
 CREATE TABLE Doctors (
@@ -32,10 +30,6 @@ CREATE TABLE Doctors (
     Dept_ID     Varchar2(3) REFERENCES Department
 );
 
-ALTER TABLE Department ADD(
-    M_NID       VARCHAR2(14) REFERENCES Doctors,
-    M_Start_Date DATE
-);
 
 CREATE TABLE Nurse (
     NID         VARCHAR2(14) PRIMARY KEY,
