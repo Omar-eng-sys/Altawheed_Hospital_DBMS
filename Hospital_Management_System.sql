@@ -136,9 +136,66 @@ Create table Refers(
 -- ============================================================
 
 -- TODO: Add Room and Surgery base tables
+CREATE TABLE Room (
+    Room_No VARCHAR2(5) PRIMARY KEY,
+    Room_Type VARCHAR2(30) NOT NULL,
+    Floor VARCHAR2(5) NOT NULL
+);
+
+CREATE TABLE Surgery (
+    Surg_Name VARCHAR2(100) PRIMARY KEY,
+    Cost NUMBER(8,2) NOT NULL,
+    Expected_Dur NUMBER(4,0) NOT NULL
+);
 -- TODO: Add Relation tables (Held_In, Admitted_To, Undergoes, etc.)
+CREATE TABLE Held_In (
+    Surg_Name VARCHAR2(100),
+    Room_No VARCHAR2(5),
+    PRIMARY KEY (Surg_Name, Room_No),
+    FOREIGN KEY (Surg_Name) REFERENCES Surgery(Surg_Name),
+    FOREIGN KEY (Room_No) REFERENCES Room(Room_No)
+);
 
+CREATE TABLE Admitted_To (
+    Room_No VARCHAR2(5),
+    Pat_NID VARCHAR2(14),
+    Date_In DATE NOT NULL,
+    Date_Out DATE,
+    PRIMARY KEY (Room_No, Pat_NID),
+    FOREIGN KEY (Room_No) REFERENCES Room(Room_No),
+    FOREIGN KEY (Pat_NID) REFERENCES Patient(Pat_NID)
+);
 
+CREATE TABLE Supervises_Room (
+    Room_No VARCHAR2(5),
+    Nur_NID VARCHAR2(14), -- FK to Nurse added later via ALTER
+    PRIMARY KEY (Room_No, Nur_NID),
+    FOREIGN KEY (Room_No) REFERENCES Room(Room_No)
+);
+
+CREATE TABLE Undergoes (
+    Surg_Name VARCHAR2(100),
+    Pat_NID VARCHAR2(14),
+    Surg_Date DATE NOT NULL,
+    Outcome VARCHAR2(100),
+    PRIMARY KEY (Surg_Name, Pat_NID , Surg_Date),
+    FOREIGN KEY (Surg_Name) REFERENCES Surgery(Surg_Name),
+    FOREIGN KEY (Pat_NID) REFERENCES Patient(Pat_NID)
+);
+
+CREATE TABLE Participates_In (
+    Surg_Name VARCHAR2(100),
+    Nur_NID VARCHAR2(14), -- FK to Nurse added later via ALTER
+    PRIMARY KEY (Surg_Name, Nur_NID),
+    FOREIGN KEY (Surg_Name) REFERENCES Surgery(Surg_Name)
+);
+
+CREATE TABLE Performs (
+    Surg_Name VARCHAR2(100),
+    Doc_NID VARCHAR2(14), -- FK to Doctors added later via ALTER
+    PRIMARY KEY (Surg_Name, Doc_NID),
+    FOREIGN KEY (Surg_Name) REFERENCES Surgery(Surg_Name)
+);
 -- ============================================================
 -- [5] MODULE 4: PHARMACY (Muhammad Ali)
 -- Entities: Medicine + Pharmacy Relations
