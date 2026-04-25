@@ -266,7 +266,7 @@ CREATE TABLE Medicine (
     Med_Name     VARCHAR2(100) PRIMARY KEY,
     Active_Ing   VARCHAR2(100),
     Price        NUMBER(8,2),
-    "Form"       VARCHAR2(50),
+    Form       VARCHAR2(50),
     Manufacturer VARCHAR2(100),
     Stok_Qty     NUMBER(6,0)
 );
