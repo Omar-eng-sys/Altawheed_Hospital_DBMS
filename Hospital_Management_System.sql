@@ -204,8 +204,35 @@ CREATE TABLE Performs (
 -- ============================================================
 
 -- TODO: Add Medicine table
+ create table Medicine(Med_Name varchar2(100) primary key
+ ,Active_Ing varchar2(100)
+ ,Price Number(8,2)
+ ,"Form" varchar2(50)
+  , Manufacturer varchar2(100) ,
+  Stok_Qty Number(6,0));
 -- TODO: Add Prescription (Ternary), Dispenses, Inventories
+create table Prescription(Med_Name varchar(100) references Medicine ,
+ Doc_NID varchar2(14) , --> fk from Doctor
+ Pat_NID varchar(14),  --> fk from Patient
+ Date_Issued date ,
+ Dosage varchar2(50) ,
+ Frequency varchar2(50) , 
+ Duration varchar2(50),
+ primary key (Med_Name,Doc_NID,Pat_NID));
 
+
+create table Dispenses(Med_Name varchar2(100) references Medicine ,
+  Phar_NID varchar2(14) ,  --> fk from Pharmacist
+  Pat_NID varchar(14) ,   --> fk from Patient
+  Dispense_Date date ,
+  Quantity number(6,0),
+  PRIMARY KEY (Med_Name , Phar_NID , Pat_NID));
+
+
+create table Inventories(Med_Name varchar2(100) references Medicine , 
+ Phar_NID varchar2(14) ,   -->fk from Pharmacist
+ Stock_Mng varchar2(100),
+ primary key(Med_Name , Phar_NID));
 
 -- ============================================================
 -- [6] MODULE 5: LABS, RADIOLOGY & BILLING (Nader Saleh)
