@@ -30,6 +30,11 @@ CREATE TABLE Doctors (
     Dept_ID          VARCHAR2(3) REFERENCES Department
 );
 
+-- Department: Manager NID -> Doctors
+ALTER TABLE Department MODIFY (
+  M_NID REFERENCES Doctors(NID)
+  );
+
 CREATE TABLE Nurse (
     NID     VARCHAR2(14) PRIMARY KEY,
     Name    VARCHAR2(100) NOT NULL,
@@ -355,9 +360,6 @@ CREATE TABLE Invoice_Lab_Test (
 -- [7] FINAL CONSTRAINTS (ALTER TABLE)
 -- Add Foreign Keys that reference tables across different modules
 -- ============================================================
-
--- Department: Manager NID -> Doctors
-ALTER TABLE Department MODIFY (M_NID REFERENCES Doctors(NID));
 
 -- Patient: Receptionist ID -> Receptionist
 ALTER TABLE Patient MODIFY (Rec_ID REFERENCES Receptionist(NID));
