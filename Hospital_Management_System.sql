@@ -362,34 +362,35 @@ CREATE TABLE Invoice_Lab_Test (
 -- ============================================================
 
 -- Patient: Receptionist ID -> Receptionist
-ALTER TABLE Patient ADD FOREIGN KEY (Rec_ID) REFERENCES Receptionist(NID);
+ALTER TABLE Patient MODIFY (Rec_ID REFERENCES Receptionist(NID));
 
 -- Appointment: Doctor NID -> Doctors
-ALTER TABLE Appointment ADD FOREIGN KEY (Doctor_NID) REFERENCES Doctors(NID);
+ALTER TABLE Appointment MODIFY (Doctor_NID REFERENCES Doctors(NID));
 
 -- Refers: Doctor NID -> Doctors
-ALTER TABLE Refers ADD FOREIGN KEY (Doctor_NID) REFERENCES Doctors(NID);
+ALTER TABLE Refers MODIFY (Doctor_NID REFERENCES Doctors(NID));
 
 -- Supervises_Room: Nurse NID -> Nurse
-ALTER TABLE Supervises_Room ADD FOREIGN KEY (Nur_NID) REFERENCES Nurse(NID);
+ALTER TABLE Supervises_Room MODIFY (Nur_NID REFERENCES Nurse(NID));
 
 -- Participates_In: Nurse NID -> Nurse
-ALTER TABLE Participates_In ADD FOREIGN KEY (Nur_NID) REFERENCES Nurse(NID);
+ALTER TABLE Participates_In MODIFY (Nur_NID REFERENCES Nurse(NID));
 
 -- Performs: Doctor NID -> Doctors
-ALTER TABLE Performs ADD FOREIGN KEY (Doc_NID) REFERENCES Doctors(NID);
+ALTER TABLE Performs MODIFY (Doc_NID REFERENCES Doctors(NID));
 
 -- Prescription: Doctor NID -> Doctors
-ALTER TABLE Prescription ADD FOREIGN KEY (Doc_NID) REFERENCES Doctors(NID);
+ALTER TABLE Prescription MODIFY (Doc_NID REFERENCES Doctors(NID));
 
 -- Dispenses: Pharmacist NID -> Pharmacist
-ALTER TABLE Dispenses ADD FOREIGN KEY (Phar_NID) REFERENCES Pharmacist(NID);
+ALTER TABLE Dispenses MODIFY (Phar_NID REFERENCES Pharmacist(NID));
 
 -- Inventories: Pharmacist NID -> Pharmacist
-ALTER TABLE Inventories ADD FOREIGN KEY (Phar_NID) REFERENCES Pharmacist(NID);
+ALTER TABLE Inventories MODIFY (Phar_NID REFERENCES Pharmacist(NID));
 
 -- Invoice: Receptionist NID -> Receptionist
-ALTER TABLE Invoice ADD FOREIGN KEY (Rec_NID) REFERENCES Receptionist(NID);
+ALTER TABLE Invoice MODIFY (Rec_NID REFERENCES Receptionist(NID));
+
 
 COMMIT;
 -- END OF TEMPLATE
